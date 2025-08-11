@@ -10,6 +10,4 @@ router = DefaultRouter()
 router.register(r'notes', NoteViewSet, basename='notes')
 
 app_name = 'notes'
-urlpatterns = [
-    path('', include(router.urls)),
-]
+urlpatterns = router.urls
