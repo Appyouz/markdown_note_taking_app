@@ -4,6 +4,7 @@ from .models import Notes
 from .serializers import NoteSerializer
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
+import markdown
 
 class NoteViewSet(ModelViewSet):
     queryset = Notes.objects.all()
@@ -24,6 +25,19 @@ class NoteViewSet(ModelViewSet):
         serializer = NoteSerializer(note_instance)
         
         return Response(serializer.data, status=HTTP_201_CREATED)
+
+    
+    @action(detail=True, methods=['get'])
+    def render_to_html(self, request, pk=None):
+        # get note by id
+        uploaded_note = Notes.objects.get(pk=pk)
+
+        # Convert its content to HTML using markdown
+        html = markdown.markdown(uploaded_note.content)
+
+        return Response({'html_content': html}, status=HTTP_200_OK)
+
+
 
 
 
