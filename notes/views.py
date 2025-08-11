@@ -4,12 +4,10 @@ from .models import Notes
 from .serializers import NoteSerializer
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
-from rest_framework.parsers import MultiPartParser
 
 class NoteViewSet(ModelViewSet):
     queryset = Notes.objects.all()
     serializer_class = NoteSerializer
-    parser_classes = [MultiPartParser] # Add this line
 
     @action(detail=False, methods=['post'])
     def upload_file(self,request):
